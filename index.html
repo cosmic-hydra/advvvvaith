@@ -4,47 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>ADVAITH//SF_ITINERARY [ENCRYPTED]</title>
+    <title>Advaith — San Francisco Itinerary</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <!-- Matrix digital rain background -->
-    <canvas id="matrix"></canvas>
-
-    <!-- CRT scanline + flicker overlay -->
-    <div class="crt-overlay" aria-hidden="true"></div>
+    <!-- Ambient digital rain (subtle) -->
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <div class="scanlines" aria-hidden="true"></div>
     <div class="vignette" aria-hidden="true"></div>
 
-    <!-- ============== LOCK SCREEN ============== -->
+    <!-- ============================================================
+         LOCK SCREEN
+    ============================================================= -->
     <section id="lock-screen" class="lock-screen">
         <div class="terminal-window">
             <div class="terminal-bar">
                 <span class="dot red"></span>
                 <span class="dot yellow"></span>
                 <span class="dot green"></span>
-                <span class="bar-title">root@advaith-sf: ~/secure_access</span>
+                <span class="bar-title">secure-access — ssh advaith@sf-itinerary</span>
             </div>
             <div class="terminal-body">
                 <pre class="boot-log" id="boot-log"></pre>
 
                 <div class="auth-block" id="auth-block" hidden>
-                    <pre class="ascii-art">
-   ▄▄▄       ▓█████▄  ██▒   █▓ ▄▄▄       ██▓▄▄▄█████▓ ██░ ██
-  ▒████▄     ▒██▀ ██▌▓██░   █▒▒████▄    ▓██▒▓  ██▒ ▓▒▓██░ ██▒
-  ▒██  ▀█▄   ░██   █▌ ▓██  █▒░▒██  ▀█▄  ▒██▒▒ ▓██░ ▒░▒██▀▀██░
-  ░██▄▄▄▄██  ░▓█▄   ▌  ▒██ █░░░██▄▄▄▄██ ░██░░ ▓██▓ ░ ░▓█ ░██
-   ▓█   ▓██▒ ░▒████▓    ▒▀█░   ▓█   ▓██▒░██░  ▒██▒ ░ ░▓█▒░██▓
-   ▒▒   ▓▒█░  ▒▒▓  ▒    ░ ▐░   ▒▒   ▓▒█░░▓    ▒ ░░    ▒ ░░▒░▒
-                    </pre>
-                    <p class="auth-subtitle">// SAN FRANCISCO MISSION FILE — CLEARANCE REQUIRED //</p>
+                    <div class="lock-emblem">
+                        <span class="lock-glyph">⬡</span>
+                        <div>
+                            <h1 class="lock-title">SECURE ACCESS</h1>
+                            <p class="lock-sub">San Francisco Itinerary · authorized personnel only</p>
+                        </div>
+                    </div>
 
                     <form id="auth-form" class="auth-form" autocomplete="off">
                         <label for="passphrase" class="prompt-line">
-                            <span class="prompt-user">guest@sf-net</span><span class="prompt-sep">:</span><span class="prompt-path">~$</span>
-                            <span class="prompt-cmd">sudo decrypt --passphrase</span>
+                            <span class="prompt-user">advaith@sf</span><span class="prompt-sep">:</span><span class="prompt-path">~</span><span class="prompt-cmd">$ decrypt --passphrase</span>
                         </label>
                         <div class="input-row">
                             <span class="caret-prefix">&gt;</span>
@@ -52,61 +52,81 @@
                                 type="password"
                                 id="passphrase"
                                 name="passphrase"
-                                placeholder="enter passphrase..."
+                                placeholder="enter passphrase"
                                 autocomplete="off"
                                 autocapitalize="off"
                                 autocorrect="off"
                                 spellcheck="false"
                                 aria-label="passphrase"
                             />
-                            <button type="button" id="toggle-visibility" class="toggle-visibility" aria-label="show passphrase">[ ◉ ]</button>
+                            <button type="button" id="toggle-visibility" class="toggle-visibility" aria-label="show passphrase">show</button>
                         </div>
-                        <button type="submit" class="auth-submit">&gt;&gt; AUTHENTICATE</button>
+                        <button type="submit" class="auth-submit">Authenticate &rarr;</button>
                         <p class="auth-message" id="auth-message" role="status" aria-live="polite"></p>
                     </form>
-                    <p class="auth-hint">attempts are logged · unauthorized access prohibited</p>
+                    <p class="auth-hint">Access attempts are logged · unauthorized access prohibited</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ============== MAIN SITE ============== -->
+    <!-- ============================================================
+         MAIN SITE
+    ============================================================= -->
     <main id="main-site" class="main-site" hidden>
         <header class="site-header">
-            <div class="header-inner">
-                <h1 class="glitch" data-text="ADVAITH'S SF ITINERARY">ADVAITH'S SF ITINERARY</h1>
-                <p class="tagline" id="tagline"></p>
-                <div class="status-line">
-                    <span class="status-item">STATUS: <em class="ok">ONLINE</em></span>
-                    <span class="status-item">LOCATION: <em>37.7749° N, 122.4194° W</em></span>
-                    <span class="status-item">UPLINK: <em class="ok">SECURE</em></span>
-                    <span class="status-item">CLOCK: <em id="live-clock">--:--:--</em></span>
-                </div>
-                <button id="logout-btn" class="logout-btn">[ LOCK SESSION ]</button>
+            <div class="header-top">
+                <span class="eyebrow">OPERATION: SF · JUL 2026</span>
+                <button id="logout-btn" class="logout-btn">Lock session</button>
+            </div>
+            <h1 class="site-title">San Francisco Itinerary</h1>
+            <p class="site-subtitle">Prepared for <strong>Advaith</strong> · 8 days in the Bay Area</p>
+            <div class="status-line">
+                <span class="status-item"><i class="led"></i>Status: <em>Confirmed</em></span>
+                <span class="status-item">Base: <em>San Francisco, CA</em></span>
+                <span class="status-item">Uplink: <em>Secure</em></span>
+                <span class="status-item">SF local: <em id="live-clock">--:--:--</em></span>
             </div>
         </header>
 
-        <nav class="day-nav" id="day-nav" aria-label="trip days"></nav>
-
-        <section class="mission-brief">
-            <h2 class="section-label">// MISSION BRIEF</h2>
-            <p class="brief-text">
-                Operative <strong>ADVAITH</strong> deployed to the San Francisco Bay Area.
-                Objective: maximum exploration, optimal caffeine intake, and full reconnaissance
-                of every iconic node in the city grid. All coordinates decrypted below. Stay frosty.
-            </p>
+        <!-- Overview stats -->
+        <section class="overview" aria-label="trip overview">
+            <div class="overview-grid" id="overview-grid"></div>
         </section>
 
-        <section class="itinerary" id="itinerary"></section>
+        <!-- Flights -->
+        <section class="block" id="flights-block">
+            <div class="block-head">
+                <h2 class="section-label">Flights</h2>
+                <span class="section-tag">Lufthansa · PNR B39ITJ</span>
+            </div>
+            <div class="flights" id="flights"></div>
+        </section>
 
-        <section class="intel-grid">
-            <h2 class="section-label">// FIELD INTEL</h2>
+        <!-- Day navigation -->
+        <nav class="day-nav" id="day-nav" aria-label="trip days"></nav>
+
+        <!-- Itinerary -->
+        <section class="block" id="itinerary-block">
+            <div class="block-head">
+                <h2 class="section-label">Daily Itinerary</h2>
+                <span class="section-tag">Jul 22 – 29, 2026</span>
+            </div>
+            <div class="itinerary" id="itinerary"></div>
+        </section>
+
+        <!-- Field intel -->
+        <section class="block" id="intel-block">
+            <div class="block-head">
+                <h2 class="section-label">Travel Intel</h2>
+                <span class="section-tag">Read before deployment</span>
+            </div>
             <div class="intel-cards" id="intel-cards"></div>
         </section>
 
         <footer class="site-footer">
-            <pre class="footer-ascii">[ EOF ] — transmission ends — stay safe out there, operative.</pre>
-            <p>// encrypted itinerary · for authorized eyes only · <span id="year"></span></p>
+            <p class="footer-note">Confidential travel document · for authorized eyes only</p>
+            <p class="footer-meta">© <span id="year"></span> Advaith · San Francisco Itinerary · v2.0</p>
         </footer>
     </main>
 
